@@ -1,0 +1,11 @@
+{
+  "name": "looper-js-library",
+  "version": "1.0.0",
+  "description": "Simple javascript library with helpers methods based on functional programming",
+  "main": "index.js",
+  "scripts": {
+    "start": "nodemon build/index.js"
+  },
+  "author": "Bartosz Stolc",
+  "license": "ISC"
+}
