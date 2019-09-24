@@ -1,24 +1,22 @@
-import { IsNotArrayException } from './exceptions/IsNotArrayException';
-import { ValueIsNullException } from './exceptions/IsNullException';
-
 export class Validator {
-  isArray(arr: any): never | void {
-    if (!Array.isArray(arr)) {
-      throw new IsNotArrayException();
-    }
+  // tslint:disable-next-line: no-empty
+  constructor() {}
+
+  protected isNotNull(value: any): boolean {
+    return value === undefined || value === null ? false : true;
   }
 
-  areArrays(...arrays: any[]): never | void {
-    arrays.forEach(arr => this.isArray(arr));
+  protected isStringOrSymbol(value: any): boolean {
+    return typeof value === 'symbol' || typeof value === 'string'
+      ? true
+      : false;
   }
 
-  isNotNull(item: any): never | void {
-    if (!item) {
-      throw new ValueIsNullException();
-    }
+  protected isArray(value: any): boolean {
+    return !Array.isArray(value) ? false : true;
   }
 
-  areNotNull(...items: any[]): never | void {
-    items.forEach(item => this.isNotNull(item));
+  protected areArrays(...values: any[]): boolean {
+    return values.every(value => this.isArray(value));
   }
 }
