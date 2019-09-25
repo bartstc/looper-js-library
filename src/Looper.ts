@@ -1,5 +1,3 @@
-import { Validator } from './Validator';
-
 /* Most of the functions comes from Underscore.js library.
   [REMAKE] - my own implementation of functions from Underscore.js
   [CUSTOM] - made by me
@@ -9,7 +7,7 @@ interface Map<T> {
   [key: string]: T;
 }
 
-export class Looper extends Validator {
+export class Looper {
   // [REMAKE] Returns the first element of an array. Passing n will return the first n elements of the array.
   first<T>(arr: T[], amount?: number): T | T[] | void {
     if (!this.isArray(arr)) return void 0;
@@ -129,19 +127,44 @@ export class Looper extends Validator {
 
       if (!secondArr.length) return {};
 
+      if (firstArr.length !== secondArr.length) return void 0;
+
+      if (firstArr.some(item => !this.isStringOrSymbol(item))) return void 0;
+
       return firstArr.reduce((acc, item, i, _) => {
-        if (this.isStringOrSymbol(item)) acc[item] = secondArr[i];
+        acc[item] = secondArr[i];
+        return acc;
       }, {});
     }
 
-    return firstArr.reduce((acc, item, _, __) => {
-      if (!this.isArray(item)) return void 0;
+    if (firstArr.some(item => !this.isArray(item))) return void 0;
 
-      if (item.length === 2) {
-        return (acc[item[0]] = item[1]);
-      } else {
-        return void 0;
-      }
+    if (firstArr.some(item => item.length !== 2)) return void 0;
+
+    if (!firstArr.every(item => this.isStringOrSymbol(item[0]))) return void 0;
+
+    return firstArr.reduce((acc, item, _, __) => {
+      acc[item[0]] = item[1];
+      return acc;
     }, {});
+  }
+
+  // Validation helpers
+  private isNotNull(value: any): boolean {
+    return value === undefined || value === null ? false : true;
+  }
+
+  private isStringOrSymbol(value: any): boolean {
+    return typeof value === 'symbol' || typeof value === 'string'
+      ? true
+      : false;
+  }
+
+  private isArray(value: any): boolean {
+    return !Array.isArray(value) ? false : true;
+  }
+
+  private areArrays(...values: any[]): boolean {
+    return values.every(value => this.isArray(value));
   }
 }
