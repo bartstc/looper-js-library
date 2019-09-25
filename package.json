@@ -2,6 +2,7 @@
   "name": "looper-js-library",
   "version": "1.0.0",
   "description": "Simple javascript library with helpers methods based on functional programming",
+  "types": "lib/Looper.d.ts",
   "main": "index.js",
   "scripts": {
     "test": "jest",

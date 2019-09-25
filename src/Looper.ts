@@ -7,7 +7,7 @@ interface Map<T> {
   [key: string]: T;
 }
 
-export class Looper {
+export default class Looper {
   // [REMAKE] Returns the first element of an array. Passing n will return the first n elements of the array.
   first<T>(arr: T[], amount?: number): T | T[] | void {
     if (!this.isArray(arr)) return void 0;
